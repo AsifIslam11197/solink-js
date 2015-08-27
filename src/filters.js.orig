@@ -28,7 +28,7 @@ var _find = function(params) {
   if (typeof params === 'string') {
     url = URL.resolve(url, params)
   } else {
-    url = URL.resolve(url, '?' + querystring.stringify(params))
+    url = URL.resolve(url, '?' + querystring.stringify(params))  
   }
 
   return sendRequest(this, url, options)
@@ -52,7 +52,11 @@ var _delete = function(id) {
       headers: {}
     }
 
-  return sendRequest(this, url, options, true)
+<<<<<<< HEAD
+	return sendRequest(this, url, options, true)
+=======
+  return sendRequest(this, url, options)
+>>>>>>> fix some styling and test browser version
 }
 
 module.exports = function(connection) {
@@ -60,6 +64,6 @@ module.exports = function(connection) {
     create: _create.bind(connection),
     find: _find.bind(connection),
     update: _update.bind(connection),
-    delete: _delete.bind(connection)
+    delete: _delete.bind(connection)    
   }
 };

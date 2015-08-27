@@ -1,5 +1,6 @@
 'use strict'
-var URL = require('url'),
+var fetch = require('whatwg-fetch'),
+  URL = require('url'),
   jwtDecode = require('jwt-decode'),
   helper = require('./common/response-handlers')
 
@@ -16,6 +17,17 @@ var _login = function(credentials) {
       body: JSON.stringify(this.credentials)
     }
 
+<<<<<<< HEAD
+	var self = this
+	return fetch(url, options)
+		.then(helper.checkStatus)
+		.then(helper.parseJSON)
+		.then(function(json) {
+			self.token = json
+			self.tenantId = jwtDecode(json.auth_token).app_metadata.tenantId
+			return json
+		})
+=======
   var self = this
   return fetch(url, options)
     .then(helper.checkStatus)
@@ -25,6 +37,8 @@ var _login = function(credentials) {
       self.tenantId = jwtDecode(json.auth_token).app_metadata.tenantId
       return json
     })
+    .catch(helper.handleError)
+>>>>>>> fix some styling and test browser version
 }
 
 var _setPassword = function (credentials) {
@@ -35,9 +49,16 @@ var _setPassword = function (credentials) {
       body: JSON.stringify(credentials)
     }
 
+<<<<<<< HEAD
+	return fetch(url, options)
+		.then(helper.checkStatus)
+		.then(helper.parseJSON)
+=======
   return fetch(url, options)
     .then(helper.checkStatus)
     .then(helper.parseJSON)
+    .catch(helper.handleError)
+>>>>>>> fix some styling and test browser version
 }
 
 module.exports = function(connection) {

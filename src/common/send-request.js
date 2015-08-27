@@ -1,5 +1,4 @@
-var fetch = require('node-fetch'),
-	helper = require('./response-handlers')
+'use strict'
 
 function sendRequest (connection, url, options, skip) {
 	var login;
