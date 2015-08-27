@@ -10,6 +10,7 @@ var _checkStatus = function(response) {
   }
 };
 
+<<<<<<< HEAD
 var _parseJSON = function(response, skip) {
     if(skip) 
       return response    
@@ -18,5 +19,24 @@ var _parseJSON = function(response, skip) {
 
 module.exports = {
   checkStatus: _checkStatus,
-  parseJSON: _parseJSON,
+  parseJSON: _parseJSON
+}
+=======
+var _parseJSON = function(response) {
+  if (response.status === 204 && response.statusText === 'No Content') {
+    return response;
+  }
+
+  return response.json();
 };
+
+var _handleError = function(err) {
+  throw err;
+};
+
+module.exports = {
+  checkStatus: _checkStatus,
+  parseJSON: _parseJSON,
+  handleError: _handleError,
+};
+>>>>>>> fix some styling and require of fetch and now assume that AWS is loaded in the browser beforehand because of webpack issues

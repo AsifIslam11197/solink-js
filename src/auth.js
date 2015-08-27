@@ -1,48 +1,49 @@
-'use strict'
-var URL = require('url'),
-  jwtDecode = require('jwt-decode'),
-  helper = require('./common/response-handlers')
+'use strict';
+
+var URL = require('url');
+var jwtDecode = require('jwt-decode');
+var helper = require('./common/response-handlers');
 
 var authUrl = function(host) {
-  return URL.resolve(host, 'auth/')
-}
+  return URL.resolve(host, 'auth/');
+};
 
 var _login = function(credentials) {
-  this.credentials = credentials || this.credentials
-  var url = URL.resolve(authUrl(this.host), 'login'),
-    options = { 
-      method: 'POST', 
-      headers: { 'content-type': 'application/json'},
-      body: JSON.stringify(this.credentials)
-    }
+  this.credentials = credentials || this.credentials;
+  var url = URL.resolve(authUrl(this.host), 'login');
+  var options = {
+    method: 'POST',
+    headers: { 'content-type': 'application/json'},
+    body: JSON.stringify(this.credentials),
+  };
 
-  var self = this
+  var _this = this;
   return fetch(url, options)
     .then(helper.checkStatus)
     .then(helper.parseJSON)
     .then(function(json) {
-      self.token = json
-      self.tenantId = jwtDecode(json.auth_token).app_metadata.tenantId
-      return json
+      _this.token = json;
+      _this.tenantId = jwtDecode(json.auth_token).app_metadata.tenantId;
+      return json;
     })
-}
+};
 
-var _setPassword = function (credentials) {
-  var url = URL.resolve(authUrl(this.host), 'setpassword'),
-    options = { 
-      method: 'PUT', 
+var _setPassword = function(credentials) {
+  var url = URL.resolve(authUrl(this.host), 'setpassword');
+  var options = {
+      method: 'PUT',
       headers: { 'content-type': 'application/json'},
-      body: JSON.stringify(credentials)
-    }
+      body: JSON.stringify(credentials),
+    };
 
   return fetch(url, options)
     .then(helper.checkStatus)
-    .then(helper.parseJSON)
-}
+    .then(helper.parseJSON);
+};
 
 module.exports = function(connection) {
   return {
     login: _login.bind(connection),
-    setPassword: _setPassword.bind(connection)
-  }
-}
+    setPassword: _setPassword.bind(connection),
+  };
+};
