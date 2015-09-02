@@ -25,7 +25,7 @@ var _login = function(credentials) {
       _this.token = json;
       _this.tenantId = jwtDecode(json.auth_token).app_metadata.tenantId;
       return json;
-    })
+    });
 };
 
 var _setPassword = function(credentials) {

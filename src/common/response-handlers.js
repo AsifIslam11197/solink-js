@@ -11,10 +11,12 @@ var _checkStatus = function(response) {
 };
 
 var _parseJSON = function(response, skip) {
-    if(skip) 
-      return response    
-    return response.json()
-}
+  if (skip) {
+    return response;
+  }
+
+  return response.json();
+};
 
 module.exports = {
   checkStatus: _checkStatus,
