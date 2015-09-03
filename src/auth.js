@@ -23,7 +23,7 @@ var _login = function(credentials) {
     .then(helper.parseJSON)
     .then(function(json) {
       _this.token = json;
-      _this.tenantId = jwtDecode(json.authToken).appMetadata.tenantId;
+      _this.tenantId = jwtDecode(json.authToken).app_metadata.tenantId;
       return json;
     });
 };
