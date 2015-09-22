@@ -6,6 +6,7 @@ var _checkStatus = function(response) {
     var error = new Error(response.statusText);
     return response.json().then(function(msg) {
       error.body = msg;
+      error.statusCode = response.status;
       return Promise.reject(error);
     });
   }
