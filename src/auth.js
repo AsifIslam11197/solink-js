@@ -41,9 +41,29 @@ var _setPassword = function(credentials) {
     .then(helper.parseJSON);
 };
 
+var _refresh = function(refreshToken) {
+  var url = URL.resolve(authUrl(this.host), 'refresh');
+  var options = {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify({token: refreshToken})
+  };
+
+  var _this = this;
+  return fetch(url, options)
+    .then(helper.checkStatus)
+    .then(helper.parseJSON)
+    .then(function (json) {
+      return json;
+    });
+}
+
 module.exports = function(connection) {
   return {
     login: _login.bind(connection),
     setPassword: _setPassword.bind(connection),
+    refresh: _refresh.bind(connection)
   };
 };
