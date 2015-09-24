@@ -54,10 +54,7 @@ var _refresh = function(refreshToken) {
   var _this = this;
   return fetch(url, options)
     .then(helper.checkStatus)
-    .then(helper.parseJSON)
-    .then(function (json) {
-      return json;
-    });
+    .then(helper.parseJSON);
 }
 
 module.exports = function(connection) {
