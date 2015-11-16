@@ -41,14 +41,17 @@ var _setPassword = function(credentials) {
     .then(helper.parseJSON);
 };
 
-var _refresh = function(refreshToken) {
+var _refresh = function(refreshToken, jwtToken) {
   var url = URL.resolve(authUrl(this.host), 'refresh');
   var options = {
     method: 'POST',
     headers: {
       'content-type': 'application/json'
     },
-    body: JSON.stringify({token: refreshToken})
+    body: JSON.stringify({
+      token: refreshToken,
+      authToken: jwtToken
+    })
   };
 
   var _this = this;
