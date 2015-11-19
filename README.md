@@ -34,9 +34,9 @@ General usage:
 api.endpoint.action(params)
     .then(function(res) {
         console.log('worked!')
-    }).catch(function (err) {
-        console.log('err!')
-    }
+    }, function(err) {
+        console.log(err.statusCode)
+    })
 ```
 
 Supported endpoints & actions:
@@ -45,6 +45,8 @@ Supported endpoints & actions:
 auth.
     login({email: 'email@email.com', password: 'password'})
     setPassword({email: 'email@email.com', password: 'password'})
+    forgotPassword({email: 'email@email.com', newPassword: 'newPassword'})
+    refresh(refreshToken, jwtToken)
    
 events.
     find('event_id')

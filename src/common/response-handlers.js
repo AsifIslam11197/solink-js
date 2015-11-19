@@ -4,9 +4,12 @@ var _checkStatus = function(response) {
   } else {
 
     var error = new Error(response.statusText);
+    
+    error.statusCode = response.status;
     return response.json().then(function(msg) {
       error.body = msg;
-      error.statusCode = response.status;
+      return Promise.reject(error);
+    }, function(err) {
       return Promise.reject(error);
     });
   }
