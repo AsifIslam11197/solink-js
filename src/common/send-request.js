@@ -1,5 +1,7 @@
 'use strict';
 
+var helper = require('./response-handlers');
+
 function sendRequest(connection, url, options, skip) {
   var login;
   if (Object.keys(connection.token).length === 0) {
