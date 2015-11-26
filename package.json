@@ -1,6 +1,6 @@
 {
   "name": "solink-js",
-  "version": "1.0.26",
+  "version": "1.0.27",
   "description": "intermediary client for all HTTP requests to solink cloud hosted api",
   "main": "index.js",
   "scripts": {
@@ -26,6 +26,7 @@
   "dependencies": {
     "aws-sdk": "^2.1.47",
     "jwt-decode": "^1.4.0",
-    "whatwg-fetch": "^0.8.2"
+    "isomorphic-fetch": "^2.2.0",
+    "es6-promise": "^3.0.2"
   }
 }

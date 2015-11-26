@@ -1,5 +1,8 @@
 'use strict';
 
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
+
 var URL = require('url');
 var jwtDecode = require('jwt-decode');
 var helper = require('./common/response-handlers');
@@ -41,6 +44,19 @@ var _setPassword = function(credentials) {
     .then(helper.parseJSON);
 };
 
+var _forgotPassword = function (credentials) {
+  var url = URL.resolve(authUrl(this.host), 'forgotpassword'),
+    options = { 
+      method: 'POST', 
+      headers: { 'content-type': 'application/json'},
+      body: JSON.stringify(credentials)
+    }
+
+  return fetch(url, options)
+    .then(helper.checkStatus)
+    .then(helper.parseJSON)
+}
+
 var _refresh = function(refreshToken, jwtToken) {
   var url = URL.resolve(authUrl(this.host), 'refresh');
   var options = {
@@ -60,10 +76,18 @@ var _refresh = function(refreshToken, jwtToken) {
     .then(helper.parseJSON);
 }
 
+var _switchUser = function (userToken) {
+  var _this = this;
+  _this.token = userToken;
+  _this.tenantId = jwtDecode(userToken.authToken).app_metadata.tenantId;
+}
+
 module.exports = function(connection) {
   return {
     login: _login.bind(connection),
     setPassword: _setPassword.bind(connection),
-    refresh: _refresh.bind(connection)
-  };
-};
+    forgotPassword: _forgotPassword.bind(connection),
+    refresh: _refresh.bind(connection),
+    switchUser: _switchUser.bind(connection)
+  }
+}
