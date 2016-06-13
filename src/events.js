@@ -39,6 +39,17 @@ var _create = function(ev) {
     });
 };
 
+var _update = function(id, body) {
+  var url = URL.resolve(eventsUrl(this.host), id);
+  url = URL.resolve(url + '/', 'edit');
+  var options = {
+    method: 'PUT',
+    headers: { 'content-type': 'application/json'},
+    body: JSON.stringify(body),
+  };
+  return sendRequest(this, url, options);
+};
+
 var _histogram = function(params) {
   var url = URL.resolve(eventsUrl(this.host), 'histogram');
   var options = {
@@ -55,6 +66,7 @@ module.exports = function(connection) {
   return {
     find: _find.bind(connection),
     create: _create.bind(connection),
+    update: _update.bind(connection),
     histogram: _histogram.bind(connection),
   };
 };
