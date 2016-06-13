@@ -39,7 +39,7 @@ var _create = function(ev) {
     });
 };
 
-var _update = function(id, body) {
+var _editEvent = function(id, body) {
   var url = URL.resolve(eventsUrl(this.host), id);
   url = URL.resolve(url + '/', 'edit');
   var options = {
@@ -66,7 +66,7 @@ module.exports = function(connection) {
   return {
     find: _find.bind(connection),
     create: _create.bind(connection),
-    update: _update.bind(connection),
+    editEvent: _editEvent.bind(connection),
     histogram: _histogram.bind(connection),
   };
 };
