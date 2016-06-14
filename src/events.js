@@ -40,8 +40,7 @@ var _create = function(ev) {
 };
 
 var _editEvent = function(id, body) {
-  var url = URL.resolve(eventsUrl(this.host), id);
-  url = URL.resolve(url + '/', 'edit');
+  var url = URL.resolve(eventsUrl(this.host) + id + '/', 'edit');
   var options = {
     method: 'PUT',
     headers: { 'content-type': 'application/json'},
