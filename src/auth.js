@@ -83,8 +83,7 @@ var _switchUser = function (userToken) {
 }
 
 var _impersonate = function (customerId, impersonationToken) {
-  // TODO: replace url with solinkcloud URL once deployed
-  var url = 'https://test-callhome.solinkcloud.com/api/auth/impersonate';
+  var url = URL.resolve(authUrl(this.host), 'impersonate');
   return fetch(url, {
     method: 'POST',
     headers: {
