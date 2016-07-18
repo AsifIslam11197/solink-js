@@ -82,12 +82,30 @@ var _switchUser = function (userToken) {
   _this.tenantId = jwtDecode(userToken.authToken).app_metadata.tenantId;
 }
 
+var _impersonate = function (customerId, impersonationToken) {
+  var url = URL.resolve(authUrl(this.host), 'impersonate');
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${impersonationToken}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      tenantId: customerId
+    })
+  }).then(res => {
+    return res.json();
+  });
+}
+
 module.exports = function(connection) {
   return {
     login: _login.bind(connection),
     setPassword: _setPassword.bind(connection),
     forgotPassword: _forgotPassword.bind(connection),
     refresh: _refresh.bind(connection),
-    switchUser: _switchUser.bind(connection)
+    switchUser: _switchUser.bind(connection),
+    impersonate: _impersonate.bind(connection)
   }
 }
