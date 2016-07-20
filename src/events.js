@@ -39,6 +39,19 @@ var _create = function(ev) {
     });
 };
 
+var _delete = function(eventId) {
+  var url = URL.resolve(eventsUrl(this.host), eventId);
+  var options = {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + this.token.auth_token
+    }
+  };
+
+  return fetch(url, options);
+}
+
 var _edit = function(id, body) {
   var url = URL.resolve(eventsUrl(this.host) + id + '/', 'edit');
   var options = {
@@ -65,6 +78,7 @@ module.exports = function(connection) {
   return {
     find: _find.bind(connection),
     create: _create.bind(connection),
+    delete: _delete.bind(connection),
     edit: _edit.bind(connection),
     histogram: _histogram.bind(connection),
   };
