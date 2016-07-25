@@ -46,8 +46,8 @@ var _setPassword = function(credentials) {
 
 var _forgotPassword = function (credentials) {
   var url = URL.resolve(authUrl(this.host), 'forgotpassword'),
-    options = { 
-      method: 'POST', 
+    options = {
+      method: 'POST',
       headers: { 'content-type': 'application/json'},
       body: JSON.stringify(credentials)
     }
@@ -87,7 +87,7 @@ var _impersonate = function (customerId, impersonationToken) {
   return fetch(url, {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${impersonationToken}`,
+      Authorization: 'Bearer ' + impersonationToken,
       Accept: 'application/json',
       'Content-Type': 'application/json'
     },
