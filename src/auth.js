@@ -94,7 +94,7 @@ var _impersonate = function (customerId, impersonationToken) {
     body: JSON.stringify({
       tenantId: customerId
     })
-  }).then(res => {
+  }).then(function(res) {
     return res.json();
   });
 }
