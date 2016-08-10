@@ -57,7 +57,7 @@ var _forgotPassword = function (credentials) {
     .then(helper.parseJSON)
 }
 
-var _refresh = function(refreshToken, jwtToken) {
+var _refresh = function(refreshToken, jwtToken, forceImpersonate) {
   var url = URL.resolve(authUrl(this.host), 'refresh');
   var options = {
     method: 'POST',
@@ -66,7 +66,8 @@ var _refresh = function(refreshToken, jwtToken) {
     },
     body: JSON.stringify({
       token: refreshToken,
-      authToken: jwtToken
+      authToken: jwtToken,
+      forceImpersonate: forceImpersonate
     })
   };
 
@@ -99,6 +100,21 @@ var _impersonate = function (customerId, impersonationToken) {
   });
 }
 
+var _impersonateById = function (userId, impersonationToken) {
+  var url = URL.resolve(authUrl(this.host), 'impersonate/' + userId); 
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer ' + impersonationToken,
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({})
+  }).then(function(res) {
+    return res.json();
+  });
+}
+
 module.exports = function(connection) {
   return {
     login: _login.bind(connection),
@@ -106,6 +122,7 @@ module.exports = function(connection) {
     forgotPassword: _forgotPassword.bind(connection),
     refresh: _refresh.bind(connection),
     switchUser: _switchUser.bind(connection),
-    impersonate: _impersonate.bind(connection)
+    impersonate: _impersonate.bind(connection),
+    impersonateById: _impersonateById.bind(connection)
   }
 }
